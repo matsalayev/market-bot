@@ -3,7 +3,7 @@ package bot.endpoint.routes
 import bot.domain.auth.AuthedUser
 import bot.domain.enums.BotType
 import bot.domain.telegram.Update
-import bot.services.CorporateBotService
+import bot.services.MarketBotService
 import bot.support.http4s.utils.Routes
 import bot.syntax.all.circeSyntaxJsonDecoderOps
 import cats.effect.implicits.genSpawnOps
@@ -20,7 +20,7 @@ import org.http4s.circe._
 import org.typelevel.log4cats.Logger
 
 final case class TelegramBotsRoutes[F[_]: JsonDecoder: Concurrent](
-    corporateBotService: CorporateBotService[F],
+    market: MarketBotService[F],
     webhookSecret: NonEmptyString,
   )(implicit
     logger: Logger[F]
@@ -42,7 +42,7 @@ final case class TelegramBotsRoutes[F[_]: JsonDecoder: Concurrent](
                   .flatMap(a => logger.info(a.spaces2) *> a.decodeAsF[F, Update])
                   .flatMap { update =>
                     BotType.withName(botType) match {
-                      case BotType.Corporate => corporateBotService.telegramMessage(update)
+                      case BotType.Market => market.telegramMessage(update)
                       case _ => logger.info(s"BotType not found: $botType")
                     }
                   }

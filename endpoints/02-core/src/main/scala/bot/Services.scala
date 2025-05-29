@@ -17,10 +17,7 @@ import org.typelevel.log4cats.Logger
 case class Services[F[_]](
     auth: Auth[F, AuthedUser],
     assets: AssetsService[F],
-    tasksService: TasksService[F],
-    corporateBotService: CorporateBotService[F],
-    employeeService: EmployeeService[F],
-    projectsService: ProjectsService[F],
+    marketBotService: MarketBotService[F],
   )
 
 object Services {
@@ -44,22 +41,15 @@ object Services {
         repositories.assetsRepository,
         s3Client,
       ),
-      tasksService = TasksService.make[F](repositories.tasksRepository),
-      corporateBotService = CorporateBotService.make[F](
+      marketBotService = MarketBotService.make[F](
         telegramClientCorporate,
         repositories.telegramRepository,
         repositories.people,
         repositories.users,
-        repositories.corporationsRepository,
         repositories.assetsRepository,
         s3Client,
         redis,
         appDomain,
-      ),
-      employeeService = EmployeeService.make[F](repositories.people, repositories.users),
-      projectsService = ProjectsService.make[F](
-        repositories.assetsRepository,
-        s3Client,
       ),
     )
   }
