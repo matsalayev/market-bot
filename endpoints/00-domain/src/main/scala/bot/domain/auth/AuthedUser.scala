@@ -1,12 +1,12 @@
 package bot.domain.auth
 
+import io.circe.generic.JsonCodec
+import io.circe.refined._
+
 import bot.Phone
-import bot.domain.CorporateId
 import bot.domain.PersonId
 import bot.domain.enums.Role
 import bot.syntax.circe._
-import io.circe.generic.JsonCodec
-import io.circe.refined._
 
 @JsonCodec
 sealed trait AuthedUser {

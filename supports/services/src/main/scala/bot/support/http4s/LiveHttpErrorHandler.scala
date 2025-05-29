@@ -2,12 +2,6 @@ package bot.support.http4s
 
 import scala.util.control.NonFatal
 
-import bot.Mode
-import bot.Mode.Production
-import bot.exception.AError
-import bot.exception.AError.AuthError
-import bot.support.http4s.utils.HttpErrorHandler
-import bot.support.syntax.all.deriveEntityEncoder
 import cats.MonadThrow
 import cats.implicits.catsSyntaxFlatMapOps
 import org.http4s.HttpRoutes
@@ -15,6 +9,13 @@ import org.http4s.MalformedMessageBodyFailure
 import org.http4s.Response
 import org.http4s.dsl.Http4sDsl
 import org.typelevel.log4cats.Logger
+
+import bot.Mode
+import bot.Mode.Production
+import bot.exception.AError
+import bot.exception.AError.AuthError
+import bot.support.http4s.utils.HttpErrorHandler
+import bot.support.syntax.all.deriveEntityEncoder
 
 class LiveHttpErrorHandler[F[_]: MonadThrow](
     implicit

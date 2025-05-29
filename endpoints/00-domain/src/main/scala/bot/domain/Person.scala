@@ -3,11 +3,12 @@ package bot.domain
 import java.time.LocalDate
 import java.time.ZonedDateTime
 
-import bot.domain.enums.Gender
-import bot.syntax.circe._
 import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.JsonCodec
 import io.circe.refined._
+
+import bot.domain.enums.Gender
+import bot.syntax.circe._
 
 @JsonCodec
 case class Person(

@@ -1,5 +1,8 @@
 package bot.services
 
+import cats.MonadThrow
+import cats.implicits._
+
 import bot.domain.AssetId
 import bot.domain.asset.Asset
 import bot.domain.asset.FileMeta
@@ -9,8 +12,6 @@ import bot.integration.aws.s3.S3Client
 import bot.repositories.AssetsRepository
 import bot.syntax.refined._
 import bot.utils.ID
-import cats.MonadThrow
-import cats.implicits._
 
 trait AssetsService[F[_]] {
   def create(meta: FileMeta[F]): F[AssetId]

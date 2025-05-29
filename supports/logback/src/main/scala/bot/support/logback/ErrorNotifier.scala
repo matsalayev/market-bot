@@ -1,12 +1,13 @@
 package bot.support.logback
 
+import cats.effect.Sync
+import cats.implicits._
+import org.typelevel.log4cats.Logger
+
 import bot.support.logback.requests.SendError
 import bot.support.sttp.SttpBackends
 import bot.support.sttp.SttpClient
 import bot.support.sttp.SttpClientAuth
-import cats.effect.Sync
-import cats.implicits._
-import org.typelevel.log4cats.Logger
 
 trait ErrorNotifier[F[_]] {
   def sendNotification(error: String): F[Unit]

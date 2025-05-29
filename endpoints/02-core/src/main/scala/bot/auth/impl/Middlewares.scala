@@ -1,11 +1,12 @@
 package bot.auth.impl
 
-import bot.auth.AuthConfig
-import bot.domain.auth.AuthedUser
-import bot.support.redis.RedisClient
 import cats.effect._
 import org.http4s.server.AuthMiddleware
 import org.typelevel.log4cats.Logger
+
+import bot.auth.AuthConfig
+import bot.domain.auth.AuthedUser
+import bot.support.redis.RedisClient
 
 object Middlewares {
   def make[F[_]: Sync: Logger](

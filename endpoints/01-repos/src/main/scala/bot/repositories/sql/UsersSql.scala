@@ -1,5 +1,9 @@
 package bot.repositories.sql
 
+import shapeless.HNil
+import skunk._
+import skunk.implicits._
+
 import bot.Phone
 import bot.domain.PersonId
 import bot.domain.auth.AccessCredentials
@@ -9,9 +13,6 @@ import bot.support.skunk.Sql
 import bot.support.skunk.codecs.nes
 import bot.support.skunk.codecs.phone
 import bot.support.skunk.codecs.zonedDateTime
-import shapeless.HNil
-import skunk._
-import skunk.implicits._
 
 private[repositories] object UsersSql extends Sql[PersonId] {
   private val codec = (id *: role *: phone).to[User]

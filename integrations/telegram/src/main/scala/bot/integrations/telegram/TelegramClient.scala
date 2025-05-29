@@ -1,7 +1,6 @@
 package bot.integrations.telegram
 
 import java.net.URI
-
 import cats.Applicative
 import cats.effect.Sync
 import cats.implicits.none
@@ -11,18 +10,8 @@ import sttp.client3.HttpURLConnectionBackend
 import sttp.client3.asByteArray
 import sttp.client3.basicRequest
 import sttp.model.Uri
-
-import bot.integrations.telegram.domain.GetFileResponse
-import bot.integrations.telegram.domain.MessageEntity
-import bot.integrations.telegram.domain.ReplyMarkup
-import bot.integrations.telegram.requests.AnswerCallbackQuery
-import bot.integrations.telegram.requests.DeleteMessage
-import bot.integrations.telegram.requests.EditMessageCaption
-import bot.integrations.telegram.requests.EditMessageReplyMarkup
-import bot.integrations.telegram.requests.EditMessageText
-import bot.integrations.telegram.requests.GetFile
-import bot.integrations.telegram.requests.SendMessage
-import bot.integrations.telegram.requests.SendPhoto
+import bot.integrations.telegram.domain.{GetFileResponse, MenuButtonWebApp, MessageEntity, ReplyMarkup}
+import bot.integrations.telegram.requests.{AnswerCallbackQuery, DeleteMessage, EditMessageCaption, EditMessageReplyMarkup, EditMessageText, GetFile, SendMessage, SendPhoto, SetChatMenuButton}
 import bot.support.sttp.SttpBackends
 import bot.support.sttp.SttpClient
 import bot.support.sttp.SttpClientAuth
@@ -74,6 +63,8 @@ trait TelegramClient[F[_]] {
   def downloadFile(filePath: String): F[Option[Array[Byte]]]
 
   def deleteMessage(chatId: Long, messageId: Long): F[Unit]
+
+  def setChatMenuButton(chatId: Long, menuButton: Option[MenuButtonWebApp]): F[Unit]
 }
 
 object TelegramClient {
@@ -168,6 +159,9 @@ object TelegramClient {
         cache_time: Int,
       ): F[Unit] =
       client.request(AnswerCallbackQuery(callbackQueryId, text, showAlert, cache_time)).void
+
+    override def setChatMenuButton(chatId: Long, menuButton: Option[MenuButtonWebApp]): F[Unit] =
+      client.request(SetChatMenuButton(chatId, menuButton)).void
   }
 
   private class NoOpTelegramClientImpl[F[_]: Applicative](implicit logger: Logger[F])
@@ -224,5 +218,8 @@ object TelegramClient {
         cache_time: Int,
       ): F[Unit] =
       logger.info(s"Telegram answer callback query")
+
+    override def setChatMenuButton(chatId: Long, menuButton: Option[MenuButtonWebApp]): F[Unit] =
+      logger.info(s"Telegram set chat menu button for [$chatId] with button: $menuButton")
   }
 }

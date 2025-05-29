@@ -1,14 +1,15 @@
 package bot.repositories
 
+import cats.effect.IO
+import cats.effect.Resource
+import cats.implicits.catsSyntaxOptionId
+import skunk.Session
+
 import bot.Language
 import bot.database.DBSuite
 import bot.generators.Generators
 import bot.generators.PeopleGenerators
 import bot.syntax.refined._
-import cats.effect.IO
-import cats.effect.Resource
-import cats.implicits.catsSyntaxOptionId
-import skunk.Session
 
 object PeopleRepositorySpec extends DBSuite with Generators with PeopleGenerators {
   override def schemaName: String = "public"

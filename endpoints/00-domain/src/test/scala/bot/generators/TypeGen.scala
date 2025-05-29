@@ -1,11 +1,12 @@
 package bot.generators
 
+import org.scalacheck.Gen
+
 import bot.Language
 import bot.domain._
 import bot.domain.enums.Gender
 import bot.domain.enums.Role
 import bot.test.generators.Generators
-import org.scalacheck.Gen
 
 trait TypeGen { this: Generators =>
   val personIdGen: Gen[PersonId] = idGen(PersonId.apply)

@@ -1,5 +1,10 @@
 package bot.repositories
 
+import cats.data.OptionT
+import cats.effect.Resource
+import cats.implicits._
+import skunk._
+
 import bot.Language
 import bot.ResponseMessages.USER_NOT_FOUND
 import bot.domain.PersonId
@@ -7,10 +12,6 @@ import bot.effects.Calendar
 import bot.exception.AError
 import bot.repositories.sql.PeopleSql
 import bot.support.skunk.syntax.all._
-import cats.data.OptionT
-import cats.effect.Resource
-import cats.implicits._
-import skunk._
 
 trait PeopleRepository[F[_]] {
   def create(person: dto.Person): F[Unit]

@@ -2,11 +2,6 @@ package bot.support.syntax
 
 import java.time.ZonedDateTime
 
-import bot.Language
-import bot.exception.AError
-import bot.exception.AError.UnprocessableEntity
-import bot.support.http4s.utils.MapConvert
-import bot.support.http4s.utils.MapConvert.ValidationResult
 import cats.MonadThrow
 import cats.effect.Sync
 import cats.effect.kernel.Concurrent
@@ -19,6 +14,12 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.headers.`Accept-Language`
 import org.http4s.headers.`Content-Type`
 import org.http4s.multipart.Part
+
+import bot.Language
+import bot.exception.AError
+import bot.exception.AError.UnprocessableEntity
+import bot.support.http4s.utils.MapConvert
+import bot.support.http4s.utils.MapConvert.ValidationResult
 
 trait Http4sSyntax {
   implicit def http4SyntaxReqOps[F[_]: JsonDecoder: MonadThrow](

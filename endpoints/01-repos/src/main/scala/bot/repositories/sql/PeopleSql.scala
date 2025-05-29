@@ -1,12 +1,13 @@
 package bot.repositories.sql
 
+import skunk._
+import skunk.codec.all.date
+import skunk.implicits._
+
 import bot.domain.PersonId
 import bot.repositories.dto
 import bot.support.skunk.Sql
 import bot.support.skunk.codecs._
-import skunk._
-import skunk.codec.all.date
-import skunk.implicits._
 
 private[repositories] object PeopleSql extends Sql[PersonId] {
   private val columns =

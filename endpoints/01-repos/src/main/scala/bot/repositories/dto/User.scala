@@ -2,11 +2,12 @@ package bot.repositories.dto
 
 import java.time.ZonedDateTime
 
+import eu.timepit.refined.types.string.NonEmptyString
+
 import bot.Phone
 import bot.domain.AssetId
 import bot.domain.PersonId
 import bot.domain.enums.Role
-import eu.timepit.refined.types.string.NonEmptyString
 
 case class User(
     id: PersonId,

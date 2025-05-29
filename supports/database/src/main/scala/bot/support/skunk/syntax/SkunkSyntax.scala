@@ -1,6 +1,5 @@
 package bot.support.skunk.syntax
 
-import bot.syntax.refined.commonSyntaxAutoUnwrapV
 import cats.effect._
 import cats.implicits._
 import eu.timepit.refined.types.numeric.PosInt
@@ -8,6 +7,8 @@ import org.typelevel.log4cats.Logger
 import skunk._
 import skunk.codec.all._
 import skunk.implicits._
+
+import bot.syntax.refined.commonSyntaxAutoUnwrapV
 
 trait SkunkSyntax {
   implicit def skunkSyntaxCommandOps[A](cmd: Command[A]): CommandOps[A] =

@@ -1,10 +1,5 @@
 package bot.auth.utils
 
-import bot.auth.AuthConfig.UserAuthConfig
-import bot.domain.auth.AuthTokens
-import bot.effects.GenUUID
-import bot.syntax.generic.genericSyntaxGenericTypeOps
-import bot.syntax.refined.commonSyntaxAutoUnwrapV
 import cats.Monad
 import cats.implicits._
 import dev.profunktor.auth.jwt.JwtSecretKey
@@ -13,6 +8,12 @@ import dev.profunktor.auth.jwt.jwtEncode
 import io.circe.Encoder
 import pdi.jwt.JwtAlgorithm
 import pdi.jwt.JwtClaim
+
+import bot.auth.AuthConfig.UserAuthConfig
+import bot.domain.auth.AuthTokens
+import bot.effects.GenUUID
+import bot.syntax.generic.genericSyntaxGenericTypeOps
+import bot.syntax.refined.commonSyntaxAutoUnwrapV
 
 trait Tokens[F[_]] {
   def createToken[U: Encoder](data: U): F[AuthTokens]

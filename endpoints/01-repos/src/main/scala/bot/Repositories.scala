@@ -1,9 +1,10 @@
 package bot
 
-import bot.repositories._
 import cats.effect.Async
 import cats.effect.Resource
 import skunk.Session
+
+import bot.repositories._
 
 case class Repositories[F[_]](
     users: UsersRepository[F],

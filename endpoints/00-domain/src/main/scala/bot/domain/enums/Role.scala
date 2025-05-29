@@ -5,8 +5,6 @@ import enumeratum._
 
 sealed trait Role extends Snakecase
 object Role extends Enum[Role] with CirceEnum[Role] {
-  case object Director extends Role
-  case object Manager extends Role
-  case object Employee extends Role
+  case object Agent extends Role
   override def values: IndexedSeq[Role] = findValues
 }

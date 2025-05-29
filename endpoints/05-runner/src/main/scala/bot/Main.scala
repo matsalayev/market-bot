@@ -1,6 +1,5 @@
 package bot
 
-import bot.setup.Environment
 import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.IOApp
@@ -9,6 +8,8 @@ import cats.implicits.catsSyntaxOptionId
 import cats.implicits.toTraverseOps
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
+
+import bot.setup.Environment
 
 object Main extends IOApp {
   implicit val logger: Logger[IO] = Slf4jLogger.getLogger[IO]

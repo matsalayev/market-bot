@@ -1,14 +1,15 @@
 package bot.repositories.sql
 
+import eu.timepit.refined.types.string.NonEmptyString
+import skunk._
+import skunk.codec.all.int8
+import skunk.implicits._
+
 import bot.domain.PersonId
 import bot.domain.telegram.BotUser
 import bot.repositories.dto.User
 import bot.support.skunk.Sql
 import bot.support.skunk.codecs.nes
-import eu.timepit.refined.types.string.NonEmptyString
-import skunk._
-import skunk.codec.all.int8
-import skunk.implicits._
 
 private[repositories] object TelegramSql extends Sql {
   private val columns = PeopleSql.id *: int8

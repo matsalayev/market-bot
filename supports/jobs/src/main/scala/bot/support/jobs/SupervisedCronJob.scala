@@ -2,12 +2,13 @@ package bot.support.jobs
 
 import java.time.ZonedDateTime
 
-import bot.effects.Calendar
 import cats.Monad
 import cats.syntax.all._
 import cron4s.CronExpr
 import cron4s.lib.javatime._
 import org.typelevel.log4cats.Logger
+
+import bot.effects.Calendar
 
 trait SupervisedCronJob[F[_], Env] {
   def job: CronJob[F, Env]

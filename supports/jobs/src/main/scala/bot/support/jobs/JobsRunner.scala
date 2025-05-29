@@ -2,13 +2,14 @@ package bot.support.jobs
 
 import java.time.ZonedDateTime
 
-import bot.support.jobs.JobsRunnerConfig.CronJobConfig
 import cats.Parallel
 import cats.effect.Sync
 import cats.syntax.all._
 import cron4s._
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
+
+import bot.support.jobs.JobsRunnerConfig.CronJobConfig
 
 class JobsRunner[F[_]: Sync: Parallel, Env](
     env: Env,

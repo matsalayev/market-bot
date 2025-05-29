@@ -1,6 +1,5 @@
 package bot
 
-import bot.support.jobs._
 import cats.Parallel
 import cats.effect.Async
 import cats.effect.ExitCode
@@ -8,6 +7,8 @@ import cats.effect.Temporal
 import cats.implicits._
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
+
+import bot.support.jobs._
 case class JobsModule[F[_]: Async: Parallel: Logger: Temporal](
     env: JobsEnvironment[F]
   ) {
@@ -24,7 +25,7 @@ object JobsModule {
   def make[F[_]: Async: Parallel: Temporal](
       env: JobsEnvironment[F]
     ): F[JobsModule[F]] = {
-    implicit val logger: Logger[F] = Slf4jLogger.getLoggerFromName("tm-jobs")
+    implicit val logger: Logger[F] = Slf4jLogger.getLoggerFromName("market-jobs")
     new JobsModule(env).pure[F]
   }
 }

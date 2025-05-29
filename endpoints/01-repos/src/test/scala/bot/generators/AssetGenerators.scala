@@ -1,8 +1,9 @@
 package bot.generators
 
+import org.scalacheck.Gen
+
 import bot.domain.asset.Asset
 import bot.syntax.refined._
-import org.scalacheck.Gen
 
 trait AssetGenerators { this: Generators =>
   def assetGen: Gen[Asset] =

@@ -1,12 +1,13 @@
 package bot.repositories
 
+import cats.effect.Resource
+import skunk._
+
 import bot.Phone
 import bot.domain.auth.AccessCredentials
 import bot.domain.auth.AuthedUser.User
 import bot.repositories.sql.UsersSql
 import bot.support.skunk.syntax.all._
-import cats.effect.Resource
-import skunk._
 
 trait UsersRepository[F[_]] {
   def find(phone: Phone): F[Option[AccessCredentials[User]]]

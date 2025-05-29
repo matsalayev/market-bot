@@ -1,5 +1,14 @@
 package bot.services
 
+import cats.Applicative
+import cats.Monad
+import cats.effect.kernel.Sync
+import cats.implicits.catsSyntaxApplicativeId
+import cats.implicits.catsSyntaxOptionId
+import cats.implicits.toFlatMapOps
+import eu.timepit.refined.types.string.NonEmptyString
+import org.typelevel.log4cats.Logger
+
 import bot.Phone
 import bot.domain.telegram.CallbackQuery
 import bot.domain.telegram.Contact
@@ -11,19 +20,14 @@ import bot.effects.Calendar
 import bot.effects.GenUUID
 import bot.integration.aws.s3.S3Client
 import bot.integrations.telegram.TelegramClient
+import bot.integrations.telegram.domain.MenuButtonWebApp
+import bot.integrations.telegram.domain.WebAppInfo
 import bot.repositories.AssetsRepository
 import bot.repositories.PeopleRepository
 import bot.repositories.TelegramRepository
 import bot.repositories.UsersRepository
 import bot.support.redis.RedisClient
 import bot.syntax.refined.commonSyntaxAutoRefineV
-import cats.Applicative
-import cats.Monad
-import cats.effect.kernel.Sync
-import cats.implicits.catsSyntaxApplicativeId
-import cats.implicits.toFlatMapOps
-import eu.timepit.refined.types.string.NonEmptyString
-import org.typelevel.log4cats.Logger
 
 trait MarketBotService[F[_]] {
   def telegramMessage(update: Update): F[Unit]
@@ -64,7 +68,7 @@ object MarketBotService {
 
     private def handleTextMessage(user: User, text: String): F[Unit] =
       text match {
-        case "/start" => ().pure[F]
+        case "/start" => sendMenu(user)
         case _ => logger.info("undefined behaviour for market bot")
       }
 
@@ -99,5 +103,11 @@ object MarketBotService {
         latitude: Double,
         longitude: Double,
       ): F[Unit] = ???
+
+    private def sendMenu(user: User): F[Unit] =
+      telegramClient.setChatMenuButton(
+        user.id,
+        MenuButtonWebApp("web_app", "nice", WebAppInfo("https://durbin.uz")).some,
+      )
   }
 }

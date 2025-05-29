@@ -2,12 +2,13 @@ package bot.support.redis
 
 import scala.concurrent.duration.FiniteDuration
 
-import bot.syntax.all.genericSyntaxGenericTypeOps
 import cats._
 import cats.implicits.toFunctorOps
 import dev.profunktor.redis4cats.RedisCommands
 import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.Encoder
+
+import bot.syntax.all.genericSyntaxGenericTypeOps
 
 trait RedisClient[F[_]] {
   def put(

@@ -1,12 +1,13 @@
 package bot.repositories
 
-import bot.generators._
-import bot.repositories.sql._
-import bot.support.skunk.syntax.all.skunkSyntaxCommandOps
 import cats.effect.IO
 import cats.effect.Resource
 import cats.implicits.toFoldableOps
 import skunk.Session
+
+import bot.generators._
+import bot.repositories.sql._
+import bot.support.skunk.syntax.all.skunkSyntaxCommandOps
 
 object data extends Generators with PeopleGenerators {
   object people {

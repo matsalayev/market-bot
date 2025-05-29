@@ -2,7 +2,6 @@ package bot.support.logback
 
 import scala.util.Try
 
-import bot.utils.ConfigLoader
 import cats.effect.IO
 import cats.effect.Resource
 import cats.effect.unsafe.implicits.global
@@ -12,6 +11,8 @@ import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import pureconfig.generic.auto.exportReader
 import sttp.client3.httpclient.fs2.HttpClientFs2Backend
+
+import bot.utils.ConfigLoader
 
 class NotifierAppender[A] extends AppenderBase[A] {
   implicit val logger: SelfAwareStructuredLogger[IO] =

@@ -1,9 +1,10 @@
 package bot.auth.utils
 
-import bot.domain.TokenExpiration
 import cats.effect.Sync
 import cats.implicits.toFunctorOps
 import pdi.jwt.JwtClaim
+
+import bot.domain.TokenExpiration
 
 trait JwtExpire[F[_]] {
   def expiresIn(claim: JwtClaim, exp: TokenExpiration): F[JwtClaim]

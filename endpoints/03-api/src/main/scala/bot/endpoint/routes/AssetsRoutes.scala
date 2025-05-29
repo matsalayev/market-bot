@@ -1,5 +1,11 @@
 package bot.endpoint.routes
 
+import cats.effect.Async
+import cats.implicits._
+import org.http4s._
+import org.http4s.circe.JsonDecoder
+import org.http4s.multipart.Multipart
+
 import bot.ObjectId
 import bot.domain.asset.FileMeta
 import bot.domain.auth.AuthedUser
@@ -9,11 +15,6 @@ import bot.support.http4s.utils.Routes
 import bot.support.syntax.all.deriveEntityEncoder
 import bot.support.syntax.all.http4SyntaxPartOps
 import bot.syntax.circe._
-import cats.effect.Async
-import cats.implicits._
-import org.http4s._
-import org.http4s.circe.JsonDecoder
-import org.http4s.multipart.Multipart
 
 final case class AssetsRoutes[F[_]: JsonDecoder: Async](
     assets: AssetsService[F]

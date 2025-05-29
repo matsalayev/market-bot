@@ -1,5 +1,9 @@
 package bot.repositories
 
+import cats.effect.Resource
+import eu.timepit.refined.types.string.NonEmptyString
+import skunk._
+
 import bot.domain.PersonId
 import bot.domain.telegram.BotUser
 import bot.effects.Calendar
@@ -7,9 +11,6 @@ import bot.repositories.dto.User
 import bot.repositories.sql.TelegramSql
 import bot.support.skunk.syntax.all.skunkSyntaxCommandOps
 import bot.support.skunk.syntax.all.skunkSyntaxQueryOps
-import cats.effect.Resource
-import eu.timepit.refined.types.string.NonEmptyString
-import skunk._
 
 trait TelegramRepository[F[_]] {
   def createBotUser(user: BotUser): F[Unit]

@@ -1,5 +1,11 @@
 package bot
 
+import cats.data.OptionT
+import cats.effect.Async
+import cats.effect.std.Random
+import eu.timepit.refined.types.string.NonEmptyString
+import org.typelevel.log4cats.Logger
+
 import bot.auth.AuthConfig
 import bot.auth.impl.Auth
 import bot.domain.auth.AccessCredentials
@@ -8,11 +14,6 @@ import bot.integration.aws.s3.S3Client
 import bot.integrations.telegram.TelegramClient
 import bot.services._
 import bot.support.redis.RedisClient
-import cats.data.OptionT
-import cats.effect.Async
-import cats.effect.std.Random
-import eu.timepit.refined.types.string.NonEmptyString
-import org.typelevel.log4cats.Logger
 
 case class Services[F[_]](
     auth: Auth[F, AuthedUser],
@@ -26,8 +27,7 @@ object Services {
       repositories: Repositories[F],
       redis: RedisClient[F],
       s3Client: S3Client[F],
-      telegramClientCorporate: TelegramClient[F],
-      telegramClientEmployee: TelegramClient[F],
+      telegramClientMarket: TelegramClient[F],
       appDomain: NonEmptyString,
     ): Services[F] = {
     def findUser: Phone => F[Option[AccessCredentials[AuthedUser]]] = phone =>
@@ -42,7 +42,7 @@ object Services {
         s3Client,
       ),
       marketBotService = MarketBotService.make[F](
-        telegramClientCorporate,
+        telegramClientMarket,
         repositories.telegramRepository,
         repositories.people,
         repositories.users,

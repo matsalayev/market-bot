@@ -4,8 +4,6 @@ import java.util.UUID
 
 import scala.concurrent.duration.FiniteDuration
 
-import bot.syntax.refined.commonSyntaxAutoRefineV
-import bot.utils.uuid
 import cats.implicits.catsSyntaxEitherId
 import derevo.cats.eqv
 import derevo.cats.show
@@ -16,30 +14,15 @@ import pureconfig.BasicReaders.finiteDurationConfigReader
 import pureconfig.ConfigReader
 import pureconfig.error.FailureReason
 
+import bot.syntax.refined.commonSyntaxAutoRefineV
+import bot.utils.uuid
+
 package object domain {
   @derive(eqv, show, uuid)
   @newtype case class PersonId(value: UUID)
 
   @derive(eqv, show, uuid)
   @newtype case class AssetId(value: UUID)
-
-  @derive(eqv, show, uuid)
-  @newtype case class LocationId(value: UUID)
-
-  @derive(eqv, show, uuid)
-  @newtype case class CorporateId(value: UUID)
-
-  @derive(eqv, show, uuid)
-  @newtype case class ProjectId(value: UUID)
-
-  @derive(eqv, show, uuid)
-  @newtype case class TaskId(value: UUID)
-
-  @derive(eqv, show, uuid)
-  @newtype case class TagId(value: UUID)
-
-  @derive(eqv, show, uuid)
-  @newtype case class WorkId(value: UUID)
 
   @newtype case class JwtAccessTokenKey(secret: NonEmptyString)
 

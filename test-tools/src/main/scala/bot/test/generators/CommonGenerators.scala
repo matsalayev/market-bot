@@ -7,12 +7,13 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.util.UUID
 
-import bot.Phone
-import bot.syntax.refined._
 import eu.timepit.refined.types.all.NonNegDouble
 import eu.timepit.refined.types.numeric.NonNegInt
 import eu.timepit.refined.types.numeric.NonNegLong
 import org.scalacheck.Gen
+
+import bot.Phone
+import bot.syntax.refined._
 
 trait CommonGenerators {
   def nonEmptyStringGen(min: Int = 3, max: Int = 100): Gen[String] =

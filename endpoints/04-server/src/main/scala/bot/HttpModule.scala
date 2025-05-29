@@ -1,10 +1,5 @@
 package bot
 
-import bot.domain.auth.AuthedUser
-import bot.endpoint.routes._
-import bot.http.Environment
-import bot.support.http4s.HttpServer
-import bot.support.http4s.utils.Routes
 import cats.data.NonEmptyList
 import cats.effect.Async
 import cats.effect.ExitCode
@@ -15,6 +10,12 @@ import org.http4s.circe.JsonDecoder
 import org.http4s.server.Router
 import org.typelevel.log4cats.Logger
 
+import bot.domain.auth.AuthedUser
+import bot.endpoint.routes._
+import bot.http.Environment
+import bot.support.http4s.HttpServer
+import bot.support.http4s.utils.Routes
+
 object HttpModule {
   private def allRoutes[F[_]: Async: JsonDecoder: Logger](
       env: Environment[F]
@@ -23,7 +24,7 @@ object HttpModule {
       .of[Routes[F, AuthedUser]](
         new TelegramBotsRoutes[F](
           env.services.marketBotService,
-          env.telegramCorporateBot.webhookSecret,
+          env.telegramMarketBot.webhookSecret,
         ),
         new AuthRoutes[F](env.services.auth),
         new AssetsRoutes[F](env.services.assets),
@@ -40,6 +41,6 @@ object HttpModule {
       logger: Logger[F]
     ): Resource[F, F[ExitCode]] =
     HttpServer.make[F](env.config, implicit wbs => allRoutes[F](env)).map { _ =>
-      logger.info(s"TM http server is started").as(ExitCode.Success)
+      logger.info(s"Market-Bot http server is started").as(ExitCode.Success)
     }
 }

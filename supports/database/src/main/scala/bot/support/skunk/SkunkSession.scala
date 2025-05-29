@@ -1,7 +1,5 @@
 package bot.support.skunk
 
-import bot.support.skunk.syntax.all.skunkSyntaxConnectionOps
-import bot.syntax.refined.commonSyntaxAutoUnwrapV
 import cats.effect.Temporal
 import cats.effect.std.Console
 import fs2.io.net.Network
@@ -10,6 +8,9 @@ import org.typelevel.log4cats.Logger
 import skunk.Session
 import skunk.SessionPool
 import skunk.util.Typer
+
+import bot.support.skunk.syntax.all.skunkSyntaxConnectionOps
+import bot.syntax.refined.commonSyntaxAutoUnwrapV
 
 object SkunkSession {
   def make[F[_]: Temporal: Logger: Network: Console](config: DataBaseConfig): SessionPool[F] =

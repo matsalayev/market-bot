@@ -1,10 +1,11 @@
 package bot.support.logback.requests
 
-import bot.support.sttp.SttpRequest
 import io.circe.Json
 import sttp.model.HeaderNames
 import sttp.model.MediaType
 import sttp.model.Method
+
+import bot.support.sttp.SttpRequest
 
 case class SendError(error: String)
 

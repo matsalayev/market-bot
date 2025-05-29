@@ -1,16 +1,5 @@
 package bot.setup
 
-import bot.JobsEnvironment
-import bot.Repositories
-import bot.Services
-import bot.auth.impl.Middlewares
-import bot.http.{ Environment => ServerEnvironment }
-import bot.integration.aws.s3.S3Client
-import bot.integrations.telegram.TelegramClient
-import bot.support.database.Migrations
-import bot.support.redis.RedisClient
-import bot.support.skunk.SkunkSession
-import bot.utils.ConfigLoader
 import cats.MonadThrow
 import cats.effect.Async
 import cats.effect.Resource
@@ -23,6 +12,18 @@ import org.typelevel.log4cats.Logger
 import pureconfig.generic.auto.exportReader
 import sttp.client3.httpclient.fs2.HttpClientFs2Backend
 
+import bot.JobsEnvironment
+import bot.Repositories
+import bot.Services
+import bot.auth.impl.Middlewares
+import bot.http.{ Environment => ServerEnvironment }
+import bot.integration.aws.s3.S3Client
+import bot.integrations.telegram.TelegramClient
+import bot.support.database.Migrations
+import bot.support.redis.RedisClient
+import bot.support.skunk.SkunkSession
+import bot.utils.ConfigLoader
+
 case class Environment[F[_]: Async: MonadThrow: Logger](
     config: Config,
     repositories: Repositories[F],
@@ -30,8 +31,7 @@ case class Environment[F[_]: Async: MonadThrow: Logger](
     middlewares: Middlewares[F],
     s3Client: S3Client[F],
     redis: RedisClient[F],
-    telegramClientEmployee: TelegramClient[F],
-    telegramClientCorporate: TelegramClient[F],
+    telegramClientMarket: TelegramClient[F],
   ) {
   lazy val jobsEnabled: Boolean = config.jobs.enabled
   lazy val toServer: ServerEnvironment[F] =
@@ -40,11 +40,9 @@ case class Environment[F[_]: Async: MonadThrow: Logger](
       services = services,
       config = config.httpServer,
       s3Client = s3Client,
-      telegramClientEmployee = telegramClientEmployee,
-      telegramClientCorporate = telegramClientCorporate,
+      telegramClientMarket = telegramClientMarket,
       redis = redis,
-      telegramCorporateBot = config.tmCorporateBot,
-      telegramEmployeeBot = config.tmEmployeeBot,
+      telegramMarketBot = config.marketBot,
     )
   lazy val toJobs: JobsEnvironment[F] =
     JobsEnvironment(
@@ -66,11 +64,8 @@ object Environment {
 
       implicit0(random: Random[F]) <- Resource.eval(Random.scalaUtilRandom)
       s3Client <- S3Client.resource(config.s3)
-      telegramBrokerCorporate <- HttpClientFs2Backend.resource[F]().map { implicit backend =>
-        TelegramClient.make[F](config.tmCorporateBot)
-      }
-      telegramBrokerEmployee <- HttpClientFs2Backend.resource[F]().map { implicit backend =>
-        TelegramClient.make[F](config.tmEmployeeBot)
+      telegramBrokerMarket <- HttpClientFs2Backend.resource[F]().map { implicit backend =>
+        TelegramClient.make[F](config.marketBot)
       }
       services = Services
         .make[F](
@@ -78,8 +73,7 @@ object Environment {
           repositories,
           redis,
           s3Client,
-          telegramBrokerCorporate,
-          telegramBrokerEmployee,
+          telegramBrokerMarket,
           config.appDomain,
         )
       middleware = Middlewares.make[F](config.auth, redis)
@@ -90,7 +84,6 @@ object Environment {
       middleware,
       s3Client,
       redis,
-      telegramBrokerCorporate,
-      telegramBrokerEmployee,
+      telegramBrokerMarket,
     )
 }

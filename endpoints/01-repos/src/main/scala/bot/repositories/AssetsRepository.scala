@@ -1,11 +1,12 @@
 package bot.repositories
 
+import cats.effect.Resource
+import skunk._
+
 import bot.domain.AssetId
 import bot.domain.asset.Asset
 import bot.repositories.sql.AssetsSql
 import bot.support.skunk.syntax.all._
-import cats.effect.Resource
-import skunk._
 
 trait AssetsRepository[F[_]] {
   def create(asset: Asset): F[Unit]

@@ -1,16 +1,17 @@
 package bot.endpoint.routes
 
-import bot.auth.impl.Auth
-import bot.domain.auth.AuthedUser
-import bot.domain.auth.Credentials
-import bot.support.http4s.utils.Routes
-import bot.support.syntax.http4s.http4SyntaxReqOps
 import cats.Monad
 import cats.MonadThrow
 import cats.implicits._
 import org.http4s._
 import org.http4s.circe.CirceEntityCodec.circeEntityEncoder
 import org.http4s.circe.JsonDecoder
+
+import bot.auth.impl.Auth
+import bot.domain.auth.AuthedUser
+import bot.domain.auth.Credentials
+import bot.support.http4s.utils.Routes
+import bot.support.syntax.http4s.http4SyntaxReqOps
 
 final case class AuthRoutes[F[_]: Monad: JsonDecoder: MonadThrow](
     auth: Auth[F, AuthedUser]

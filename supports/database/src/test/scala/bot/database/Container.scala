@@ -2,8 +2,6 @@ package bot.database
 
 import java.time.ZoneId
 
-import bot.support.database.Migrations
-import bot.support.database.MigrationsConfig
 import cats.effect.IO
 import cats.effect.Resource
 import org.testcontainers.containers.PostgreSQLContainer
@@ -11,6 +9,9 @@ import org.testcontainers.utility.DockerImageName
 import org.typelevel.log4cats.SelfAwareStructuredLogger
 import org.typelevel.log4cats.noop.NoOpLogger
 import weaver.scalacheck.CheckConfig
+
+import bot.support.database.Migrations
+import bot.support.database.MigrationsConfig
 
 trait Container {
   def schemaName: String

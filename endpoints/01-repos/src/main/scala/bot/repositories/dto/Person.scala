@@ -3,9 +3,10 @@ package bot.repositories.dto
 import java.time.LocalDate
 import java.time.ZonedDateTime
 
+import eu.timepit.refined.types.string.NonEmptyString
+
 import bot.domain.PersonId
 import bot.domain.enums.Gender
-import eu.timepit.refined.types.string.NonEmptyString
 
 case class Person(
     id: PersonId,

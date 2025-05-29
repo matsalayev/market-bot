@@ -2,11 +2,12 @@ package bot.domain.asset
 
 import java.time.ZonedDateTime
 
-import bot.domain.AssetId
-import bot.syntax.circe._
 import eu.timepit.refined.types.string.NonEmptyString
 import io.circe.generic.JsonCodec
 import io.circe.refined._
+
+import bot.domain.AssetId
+import bot.syntax.circe._
 
 @JsonCodec
 case class Asset(

@@ -1,8 +1,9 @@
 package bot.generators
 
+import org.scalacheck.Gen
+
 import bot.repositories.dto
 import bot.syntax.refined._
-import org.scalacheck.Gen
 
 trait PeopleGenerators { this: Generators =>
   def personGen: Gen[dto.Person] =

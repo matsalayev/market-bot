@@ -2,10 +2,11 @@ package bot.support.jobs
 
 import scala.concurrent.duration.FiniteDuration
 
-import bot.effects.Calendar
 import cats.Monad
 import cats.syntax.all._
 import org.typelevel.log4cats.Logger
+
+import bot.effects.Calendar
 
 /** Entity responsible for monitoring job execution -
   * storing job's state information such as last execution time

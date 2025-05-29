@@ -1,5 +1,20 @@
 package bot.auth.impl
 
+import cats.data.EitherT
+import cats.data.OptionT
+import cats.effect.Sync
+import cats.implicits._
+import dev.profunktor.auth.AuthHeaders
+import dev.profunktor.auth.jwt.JwtAuth
+import dev.profunktor.auth.jwt.JwtSymmetricAuth
+import dev.profunktor.auth.jwt.JwtToken
+import io.circe.Decoder
+import io.circe.Encoder
+import org.http4s.Request
+import org.typelevel.log4cats.Logger
+import pdi.jwt.JwtAlgorithm
+import tsec.passwordhashers.jca.SCrypt
+
 import bot.Phone
 import bot.auth.AuthConfig.UserAuthConfig
 import bot.auth.utils.AuthMiddleware
@@ -15,20 +30,6 @@ import bot.exception.AError.AuthError.PasswordDoesNotMatch
 import bot.support.redis.RedisClient
 import bot.syntax.all.circeSyntaxDecoderOps
 import bot.syntax.refined.commonSyntaxAutoUnwrapV
-import cats.data.EitherT
-import cats.data.OptionT
-import cats.effect.Sync
-import cats.implicits._
-import dev.profunktor.auth.AuthHeaders
-import dev.profunktor.auth.jwt.JwtAuth
-import dev.profunktor.auth.jwt.JwtSymmetricAuth
-import dev.profunktor.auth.jwt.JwtToken
-import io.circe.Decoder
-import io.circe.Encoder
-import org.http4s.Request
-import org.typelevel.log4cats.Logger
-import pdi.jwt.JwtAlgorithm
-import tsec.passwordhashers.jca.SCrypt
 
 trait Auth[F[_], A] {
   def login(credentials: Credentials): F[AuthTokens]

@@ -1,11 +1,5 @@
 package bot.auth.impl
 
-import bot.auth.AuthConfig.UserAuthConfig
-import bot.auth.utils.AuthMiddleware
-import bot.domain.auth.AuthedUser
-import bot.support.redis.RedisClient
-import bot.syntax.all.circeSyntaxDecoderOps
-import bot.syntax.refined.commonSyntaxAutoUnwrapV
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.implicits._
@@ -14,6 +8,13 @@ import dev.profunktor.auth.jwt.JwtToken
 import io.circe.Decoder
 import org.http4s.server
 import pdi.jwt.JwtAlgorithm
+
+import bot.auth.AuthConfig.UserAuthConfig
+import bot.auth.utils.AuthMiddleware
+import bot.domain.auth.AuthedUser
+import bot.support.redis.RedisClient
+import bot.syntax.all.circeSyntaxDecoderOps
+import bot.syntax.refined.commonSyntaxAutoUnwrapV
 
 object LiveMiddleware {
   def make[F[_]: Sync, U <: AuthedUser: Decoder](

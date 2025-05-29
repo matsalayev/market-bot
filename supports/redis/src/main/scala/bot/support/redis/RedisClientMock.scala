@@ -3,11 +3,12 @@ package bot.support.redis
 import scala.collection.mutable
 import scala.concurrent.duration.FiniteDuration
 
-import bot.syntax.all.genericSyntaxGenericTypeOps
 import cats.effect.Sync
 import cats.implicits.catsSyntaxApplicativeId
 import cats.implicits.toFunctorOps
 import io.circe.Encoder
+
+import bot.syntax.all.genericSyntaxGenericTypeOps
 
 object RedisClientMock {
   def apply[F[_]: Sync]: RedisClient[F] = new RedisClient[F] {

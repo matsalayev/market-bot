@@ -1,11 +1,5 @@
 package bot.endpoint.routes
 
-import bot.domain.auth.AuthedUser
-import bot.domain.enums.BotType
-import bot.domain.telegram.Update
-import bot.services.MarketBotService
-import bot.support.http4s.utils.Routes
-import bot.syntax.all.circeSyntaxJsonDecoderOps
 import cats.effect.implicits.genSpawnOps
 import cats.effect.kernel.Concurrent
 import cats.implicits.catsSyntaxApplicativeError
@@ -18,6 +12,13 @@ import org.http4s.HttpRoutes
 import org.http4s.circe.JsonDecoder
 import org.http4s.circe._
 import org.typelevel.log4cats.Logger
+
+import bot.domain.auth.AuthedUser
+import bot.domain.enums.BotType
+import bot.domain.telegram.Update
+import bot.services.MarketBotService
+import bot.support.http4s.utils.Routes
+import bot.syntax.all.circeSyntaxJsonDecoderOps
 
 final case class TelegramBotsRoutes[F[_]: JsonDecoder: Concurrent](
     market: MarketBotService[F],

@@ -1,12 +1,13 @@
 package bot.domain.auth
 
-import bot.syntax.circe._
 import io.circe.Decoder
 import io.circe.Encoder
 import io.circe.generic.semiauto.deriveDecoder
 import io.circe.generic.semiauto.deriveEncoder
 import tsec.passwordhashers.PasswordHash
 import tsec.passwordhashers.jca.SCrypt
+
+import bot.syntax.circe._
 
 case class AccessCredentials[+U](data: U, password: PasswordHash[SCrypt])
 object AccessCredentials {

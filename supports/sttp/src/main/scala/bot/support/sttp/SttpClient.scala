@@ -2,7 +2,6 @@ package bot.support.sttp
 
 import java.net.URI
 
-import bot.support.sttp.SttpRequestBody._
 import cats.Show
 import cats.effect.Sync
 import cats.implicits._
@@ -13,6 +12,8 @@ import org.typelevel.log4cats.slf4j.Slf4jLogger
 import sttp.client3._
 import sttp.client3.circe._
 import sttp.model._
+
+import bot.support.sttp.SttpRequestBody._
 
 /** Wrapper around SttpBackend, that has built-in auth mechanisms and support for streaming of paginated responses
   *
@@ -36,7 +37,7 @@ object SttpClient {
       modifyRequestBodyForShow: String => String = identity[String],
     ): SttpClient[F, H] =
     new SttpClient[F, H] {
-      private val logger: Logger[F] = Slf4jLogger.getLoggerFromName[F]("tm.sttp-client")
+      private val logger: Logger[F] = Slf4jLogger.getLoggerFromName[F]("bot.sttp-client")
 
       override def request[R, Q](
           query: R
