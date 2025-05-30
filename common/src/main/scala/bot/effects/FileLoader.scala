@@ -1,16 +1,13 @@
 package bot.effects
 
-import java.io.InputStream
-
+import java.io.{FileNotFoundException, InputStream}
 import scala.io.Codec
 import scala.io.Source
-
 import cats.Applicative
 import cats.effect.Sync
 import cats.implicits._
 import fs2._
 import fs2.io.file.Files
-import fs2.io.file.Path
 
 trait FileLoader[F[_]] {
   def inputStreamAsString(is: InputStream): F[String]
@@ -45,8 +42,15 @@ object FileLoader {
           _ <- F.delay(source.close())
         } yield lines
 
-      override def resourceAsF2Stream(path: String): Stream[F, Byte] =
-        Files[F].readAll(Path(path))
+      override def resourceAsF2Stream(path: String): Stream[F, Byte] = {
+        val classLoader = getClass.getClassLoader
+        Option(classLoader.getResourceAsStream(path)) match {
+          case Some(is) =>
+            fs2.io.readInputStream(Sync[F].pure(is), 4096, closeAfterUse = true)
+          case None =>
+            Stream.raiseError[F](new FileNotFoundException(s"Resource not found: $path"))
+        }
+      }
 
       override def decodeToString: Pipe[F, Byte, String] =
         _.through(text.utf8.decode)

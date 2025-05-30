@@ -28,6 +28,7 @@ object HttpModule {
         ),
         new AuthRoutes[F](env.services.auth),
         new AssetsRoutes[F](env.services.assets),
+        new FormsRoutes[F],
       )
       .map { r =>
         Router(

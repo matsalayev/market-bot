@@ -107,7 +107,7 @@ object MarketBotService {
     private def sendMenu(user: User): F[Unit] =
       telegramClient.setChatMenuButton(
         user.id,
-        MenuButtonWebApp("web_app", "nice", WebAppInfo("https://durbin.uz")).some,
+        MenuButtonWebApp("web_app", "Open", WebAppInfo(s"$appDomain/forms/products")).some,
       )
   }
 }
