@@ -1,104 +1,97 @@
-let tg = window.Telegram.WebApp;
-
+const tg = window.Telegram.WebApp;
 tg.expand();
 
-tg.MainButton.textColor = '#FFFFFF';
-tg.MainButton.color = '#2cab37';
+const selectedItems = {};
 
-let item = "";
+function updateCartSummary() {
+  const totalItems = Object.values(selectedItems).reduce((sum, item) => sum + item.count, 0);
+  const totalPrice = Object.values(selectedItems).reduce((sum, item) => sum + (item.product.price * item.count), 0);
 
-let btn1 = document.getElementById("btn1");
-let btn2 = document.getElementById("btn2");
-let btn3 = document.getElementById("btn3");
-let btn4 = document.getElementById("btn4");
-let btn5 = document.getElementById("btn5");
-let btn6 = document.getElementById("btn6");
+  document.getElementById("total-items").innerText = `Selected: ${totalItems}`;
+  document.getElementById("total-price").innerText = `Total: ${totalPrice.toLocaleString()} UZS`;
+}
 
-btn1.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 1!");
-		item = "1";
-		tg.MainButton.show();
-	}
+function loadProducts() {
+  fetch("products")
+    .then(res => res.json())
+    .then(products => {
+      const list = document.getElementById("product-list");
+      list.innerHTML = "";
+
+      const productArray = Array.isArray(products) ? products : [products];
+
+      productArray.forEach(product => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "item";
+
+        const img = document.createElement("img");
+        img.src = product.imageUrl || "img/img.png";
+        img.className = "img";
+
+        const name = document.createElement("div");
+        name.innerText = product.name;
+
+        const price = document.createElement("div");
+        price.innerText = `${product.price.toLocaleString()} UZS`;
+
+        const btnGroup = document.createElement("div");
+        btnGroup.className = "btn-group";
+
+        const minusBtn = document.createElement("button");
+        minusBtn.className = "btn";
+        minusBtn.textContent = "-";
+
+        const countText = document.createElement("span");
+        countText.textContent = "0";
+
+        const plusBtn = document.createElement("button");
+        plusBtn.className = "btn";
+        plusBtn.textContent = "+";
+
+        plusBtn.onclick = () => {
+          if (!selectedItems[product.id]) {
+            selectedItems[product.id] = { product, count: 1 };
+          } else {
+            selectedItems[product.id].count += 1;
+          }
+          countText.textContent = selectedItems[product.id].count;
+          updateCartSummary();
+        };
+
+        minusBtn.onclick = () => {
+          if (selectedItems[product.id]) {
+            selectedItems[product.id].count -= 1;
+            if (selectedItems[product.id].count <= 0) {
+              delete selectedItems[product.id];
+              countText.textContent = "0";
+            } else {
+              countText.textContent = selectedItems[product.id].count;
+            }
+            updateCartSummary();
+          }
+        };
+
+        btnGroup.appendChild(minusBtn);
+        btnGroup.appendChild(countText);
+        btnGroup.appendChild(plusBtn);
+
+        itemDiv.appendChild(img);
+        itemDiv.appendChild(name);
+        itemDiv.appendChild(price);
+        itemDiv.appendChild(btnGroup);
+        list.appendChild(itemDiv);
+      });
+    });
+}
+
+Telegram.WebApp.onEvent("mainButtonClicked", function () {
+  tg.sendData(JSON.stringify(selectedItems));
 });
 
-btn2.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 2!");
-		item = "2";
-		tg.MainButton.show();
-	}
-});
-
-btn3.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 3!");
-		item = "3";
-		tg.MainButton.show();
-	}
-});
-
-btn4.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 4!");
-		item = "4";
-		tg.MainButton.show();
-	}
-});
-
-btn5.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 5!");
-		item = "5";
-		tg.MainButton.show();
-	}
-});
-
-btn6.addEventListener("click", function(){
-	if (tg.MainButton.isVisible) {
-		tg.MainButton.hide();
-	}
-	else {
-		tg.MainButton.setText("Вы выбрали товар 6!");
-		item = "6";
-		tg.MainButton.show();
-	}
+document.getElementById("checkout-btn").addEventListener("click", () => {
+  const selectedData = encodeURIComponent(JSON.stringify(selectedItems));
+  window.location.href = `checkout.html?data=${selectedData}`;
 });
 
 
-Telegram.WebApp.onEvent("mainButtonClicked", function(){
-	tg.sendData(item);
-});
-
-
-let usercard = document.getElementById("usercard");
-
-let p = document.createElement("p");
-
-p.innerText = `${tg.initDataUnsafe.user.first_name}
-${tg.initDataUnsafe.user.last_name}`;
-
-usercard.appendChild(p);
-
-
-
-
-
-
-
-
+loadProducts();
