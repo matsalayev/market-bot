@@ -30,7 +30,7 @@ final case class FormsRoutes[F[_]: Concurrent: FileLoader: JsonDecoder]()
             "name" -> Json.fromString("Chocolate"),
             "price" -> Json.fromInt(15000),
             "imageUrl" -> Json.fromString("img/choco.png"),
-          )
+          ),
         )
       )
 

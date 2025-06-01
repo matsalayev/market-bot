@@ -1,0 +1,68 @@
+/* Umumiy tanani bezash */
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--tg-theme-bg-color, #fff);
+  color: var(--tg-theme-text-color, #000);
+  font-family: Arial, sans-serif;
+}
+
+/* Asosiy konteyner */
+.check-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Chek qutisi */
+.check-box {
+  border: 1px dashed #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--tg-theme-bg-color, #fff);
+  color: var(--tg-theme-text-color, #000);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Chek metama'lumotlari (sana, market id) */
+.meta {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: #999; /* Kumush rang — kunduzgi va tungi rejimda ham ko‘rinadi */
+}
+
+/* Mahsulotlar ro'yxati */
+.items-list {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+/* Har bir mahsulot */
+.item {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #ccc;
+}
+
+/* Mahsulot nomi */
+.item-name {
+  font-weight: bold;
+  font-size: 15px;
+  color: var(--tg-theme-text-color, #000);
+}
+
+/* Mahsulot detali: soni va narxi */
+.item-detail {
+  font-size: 14px;
+  color: var(--tg-theme-text-color, #444);
+}
+
+/* Umumiy summani ko'rsatuvchi qism */
+.summary {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--tg-theme-text-color, #000);
+}

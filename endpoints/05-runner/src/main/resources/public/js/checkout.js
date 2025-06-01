@@ -1,12 +1,22 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
+// ⏪ Back Button
+tg.BackButton.show();
+tg.onEvent("backButtonClicked", () => {
+  window.history.back();
+});
+
+// 🗓 Sana
+const now = new Date();
+document.getElementById("order-date").innerText = now.toLocaleString("uz-UZ");
+
+// 🔢 Ma'lumotlar
 const params = new URLSearchParams(window.location.search);
 const cartData = params.get("data");
-
 const cartItems = cartData ? JSON.parse(decodeURIComponent(cartData)) : {};
 
-const cartDiv = document.getElementById("cart-items");
+const itemsList = document.getElementById("items-list");
 const totalItemsSpan = document.getElementById("total-items");
 const totalPriceSpan = document.getElementById("total-price");
 
@@ -18,28 +28,26 @@ Object.values(cartItems).forEach(({ product, count }) => {
   itemDiv.className = "item";
 
   const name = document.createElement("div");
+  name.className = "item-name";
   name.innerText = `📦 ${product.name}`;
 
-  const quantity = document.createElement("div");
-  quantity.innerText = `Count: ${count}`;
-
-  const price = document.createElement("div");
-  const itemTotal = product.price * count;
-  price.innerText = `Price: ${itemTotal.toLocaleString()} UZS`;
+  const detail = document.createElement("div");
+  detail.className = "item-detail";
+  detail.innerText = `Soni: ${count} dona | Narx: ${(product.price * count).toLocaleString()} so'm`;
 
   itemDiv.appendChild(name);
-  itemDiv.appendChild(quantity);
-  itemDiv.appendChild(price);
-  cartDiv.appendChild(itemDiv);
+  itemDiv.appendChild(detail);
+  itemsList.appendChild(itemDiv);
 
   totalItems += count;
-  totalPrice += itemTotal;
+  totalPrice += product.price * count;
 });
 
-totalItemsSpan.innerText = `Selected: ${totalItems}`;
-totalPriceSpan.innerText = `Total: ${totalPrice.toLocaleString()} UZS`;
+// 🟩 Asosiy tugma
+tg.MainButton.setText(`To‘lash: ${totalPrice.toLocaleString()} UZS`);
+tg.MainButton.show();
 
-document.getElementById("confirm-btn").addEventListener("click", () => {
+tg.onEvent("mainButtonClicked", () => {
   tg.sendData(JSON.stringify({
     type: "checkout",
     items: cartItems,
