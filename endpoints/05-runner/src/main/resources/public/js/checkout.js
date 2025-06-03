@@ -1,17 +1,14 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// ⏪ Back Button
 tg.BackButton.show();
 tg.onEvent("backButtonClicked", () => {
   window.history.back();
 });
 
-// 🗓 Sana
 const now = new Date();
 document.getElementById("order-date").innerText = now.toLocaleString("uz-UZ");
 
-// 🔢 Ma'lumotlar
 const params = new URLSearchParams(window.location.search);
 const cartData = params.get("data");
 const cartItems = cartData ? JSON.parse(decodeURIComponent(cartData)) : {};
@@ -33,7 +30,7 @@ Object.values(cartItems).forEach(({ product, count }) => {
 
   const detail = document.createElement("div");
   detail.className = "item-detail";
-  detail.innerText = `Soni: ${count} dona | Narx: ${(product.price * count).toLocaleString()} so'm`;
+  detail.innerText = `%%COUNT%%: ${count} | %%PRICE%%: ${(product.price * count).toLocaleString()} UZS`;
 
   itemDiv.appendChild(name);
   itemDiv.appendChild(detail);
@@ -43,8 +40,7 @@ Object.values(cartItems).forEach(({ product, count }) => {
   totalPrice += product.price * count;
 });
 
-// 🟩 Asosiy tugma
-tg.MainButton.setText(`To‘lash: ${totalPrice.toLocaleString()} UZS`);
+tg.MainButton.setText(`%%PAY%%: ${totalPrice.toLocaleString()} UZS`);
 tg.MainButton.show();
 
 tg.onEvent("mainButtonClicked", () => {

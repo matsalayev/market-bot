@@ -10,7 +10,7 @@ function updateCartSummary() {
   const totalPrice = Object.values(selectedItems).reduce((sum, item) => sum + item.product.price * item.count, 0);
 
   if (totalItems > 0) {
-    tg.MainButton.setText(`Buyurtma berish: ${totalPrice.toLocaleString()} UZS`);
+    tg.MainButton.setText(`%%ORDERING%%: ${totalPrice.toLocaleString()} UZS`);
     tg.MainButton.show();
   } else {
     tg.MainButton.hide();
@@ -31,7 +31,7 @@ function createProductCard(product) {
 
   const price = document.createElement("div");
   price.className = "price";
-  price.textContent = `${product.price.toLocaleString()} so'm`;
+  price.textContent = `${product.price.toLocaleString()} UZS`;
 
   const btnGroup = document.createElement("div");
   btnGroup.className = "btn-group";
@@ -97,11 +97,10 @@ function loadProducts() {
       });
     })
     .catch(err => {
-      console.error("Mahsulotlarni yuklashda xatolik:", err);
+      console.error("%%ERROR_LOADING_PRODUCTS%%:", err);
     });
 }
 
-// MainButton bosilganda checkout sahifasiga yo'naltiradi
 Telegram.WebApp.onEvent("mainButtonClicked", () => {
   const selectedData = encodeURIComponent(JSON.stringify(selectedItems));
   window.location.href = `checkout.html?data=${selectedData}`;

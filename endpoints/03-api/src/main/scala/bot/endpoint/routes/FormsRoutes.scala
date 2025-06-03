@@ -7,12 +7,16 @@ import org.http4s._
 import org.http4s.circe.JsonDecoder
 import org.http4s.circe._
 
+import bot.Language
 import bot.domain.auth.AuthedUser
 import bot.effects.FileLoader
+import bot.services.AssetsService
 import bot.support.http4s.utils.Routes
+import bot.support.syntax.all.http4SyntaxReqOps
 
-final case class FormsRoutes[F[_]: Concurrent: FileLoader: JsonDecoder]()
-    extends Routes[F, AuthedUser] {
+final case class FormsRoutes[F[_]: Concurrent: FileLoader: JsonDecoder](
+    assetsService: AssetsService[F]
+  ) extends Routes[F, AuthedUser] {
   override val path = "/forms"
 
   override val public: HttpRoutes[F] = HttpRoutes.of[F] {
@@ -34,16 +38,18 @@ final case class FormsRoutes[F[_]: Concurrent: FileLoader: JsonDecoder]()
         )
       )
 
-    case GET -> Root / html =>
-      Ok(FileLoader[F].resourceAsString(s"public/$html"))
+    case ar @ GET -> Root / html =>
+      implicit val lang: Language = ar.lang
+      Ok(assetsService.getFile(s"public/$html"))
         .map(_.withContentType(headers.`Content-Type`(MediaType.text.html)))
 
     case GET -> Root / "css" / file =>
       Ok(FileLoader[F].resourceAsString(s"public/css/$file"))
         .map(_.withContentType(headers.`Content-Type`(MediaType.text.css)))
 
-    case GET -> Root / "js" / file =>
-      Ok(FileLoader[F].resourceAsString(s"public/js/$file"))
+    case ar @ GET -> Root / "js" / file =>
+      implicit val lang: Language = ar.lang
+      Ok(assetsService.getFile(s"public/js/$file"))
         .map(_.withContentType(headers.`Content-Type`(MediaType.application.javascript)))
 
     case GET -> Root / "img" / file =>

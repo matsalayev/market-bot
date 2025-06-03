@@ -9,117 +9,87 @@ object ResponseMessages {
     Uz -> "Foydalanuvchi topilmadi",
   )
 
-  val USER_UPDATED: Map[Language, String] = Map(
-    En -> "User updated",
-    Ru -> "Пользователь обновлен",
-    Uz -> "Foydalanuvchi yangilandi",
+  val MARKET: Map[Language, String] = Map(
+    En -> "Market",
+    Ru -> "Рынок",
+    Uz -> "Bozor",
   )
 
-  val USER_DELETED: Map[Language, String] = Map(
-    En -> "User deleted",
-    Ru -> "Пользователь удален",
-    Uz -> "Foydalanuvchi o'chirildi",
+  val PRODUCTS: Map[Language, String] = Map(
+    En -> "Products",
+    Ru -> "Товары",
+    Uz -> "Mahsulotlar",
   )
 
-  val PASSWORD_DOES_NOT_MATCH: Map[Language, String] = Map(
-    En -> "Sms code does not match",
-    Ru -> "Код подтверждения не совпадает",
-    Uz -> "SMS kodi mos kelmadi",
+  val CART: Map[Language, String] = Map(
+    En -> "Cart",
+    Ru -> "Корзина",
+    Uz -> "Savatcha",
   )
 
-  val LIMIT_EXCEEDED: Map[Language, String] = Map(
-    En -> "Login Attempt Limit Exceeded:\nYou've made too many unsuccessful login attempts.\nFor security reasons, please try again after 24 hours.",
-    Ru -> "Превышен лимит попыток входа:\nВы предприняли слишком много неудачных попыток входа.\nВ целях безопасности повторите попытку через 24 часа.",
-    Uz -> "Kirish urinishlari chegarasidan oshib ketdi:\nKirish uchun juda koʻp muvaffaqiyatsiz urinishlar qildingiz.\nXavfsizlik nuqtai nazaridan, 24 soatdan keyin qayta urinib ko'ring.",
+  val CHECKOUT: Map[Language, String] = Map(
+    En -> "Checkout",
+    Ru -> "Оформить заказ",
+    Uz -> "Buyurtma berish",
   )
 
-  val INVALID_TOKEN: Map[Language, String] = Map(
-    En -> "Invalid token or expired",
-    Ru -> "Неверный токен или токен устарел",
-    Uz -> "Yaroqsiz yoki eskirgan token",
+  val DATE: Map[Language, String] = Map(
+    En -> "Date",
+    Ru -> "Дата",
+    Uz -> "Sana",
   )
 
-  val BEARER_TOKEN_NOT_FOUND: Map[Language, String] = Map(
-    En -> "Bearer token not found",
-    Ru -> "Токен не найден",
-    Uz -> "Bearer token topilmadi",
+  val COUNT: Map[Language, String] = Map(
+    En -> "Count",
+    Ru -> "Количество",
+    Uz -> "Soni",
   )
 
-  val OTP_SENT: Map[Language, String] = Map(
-    En -> "OTP sent",
-    Ru -> "OTP отправлен",
-    Uz -> "OTP yuborildi",
+  val TOTAL: Map[Language, String] = Map(
+    En -> "Total",
+    Ru -> "Итого",
+    Uz -> "Jami",
   )
 
-  val TEACHER_NOT_FOUND: Map[Language, String] = Map(
-    En -> "Teacher not found",
-    Ru -> "Учитель не найден",
-    Uz -> "Oʻtib topilmadi",
+  val PAY: Map[Language, String] = Map(
+    En -> "Pay",
+    Ru -> "Оплатить",
+    Uz -> "To‘lash",
   )
 
-  val SUBJECT_NOT_FOUND: Map[Language, String] = Map(
-    En -> "Subject not found",
-    Ru -> "Предмет не найден",
-    Uz -> "Mavzu topilmadi",
+  val PIECE: Map[Language, String] = Map(
+    En -> "Piece",
+    Ru -> "Штука",
+    Uz -> "Dona",
   )
 
-  val SUBJECT_DELETED: Map[Language, String] = Map(
-    En -> "Subject deleted",
-    Ru -> "Предмет удален",
-    Uz -> "Mavzu o'chirildi",
+  val ORDER: Map[Language, String] = Map(
+    En -> "Order",
+    Ru -> "Заказ",
+    Uz -> "Buyurtma",
   )
 
-  val SUBJECT_UPDATED: Map[Language, String] = Map(
-    En -> "Subject updated",
-    Ru -> "Предмет обновлен",
-    Uz -> "Mavzu yangilandi",
+  val PRICE: Map[Language, String] = Map(
+    En -> "Price",
+    Ru -> "Цена",
+    Uz -> "Narx",
   )
 
-  val ROOM_NOT_FOUND: Map[Language, String] = Map(
-    En -> "Room not found",
-    Ru -> "Комната не найдена",
-    Uz -> "Xona topilmadi",
+  val ORDERING: Map[Language, String] = Map(
+    En -> "Ordering",
+    Ru -> "Оформление заказа",
+    Uz -> "Buyurtma berish",
   )
 
-  val ROOM_UPDATED: Map[Language, String] = Map(
-    En -> "Room updated",
-    Ru -> "Комната обновлена",
-    Uz -> "Xona yangilandi",
+  val ERROR_LOADING_PRODUCTS: Map[Language, String] = Map(
+    En -> "Error loading products",
+    Ru -> "Ошибка загрузки товаров",
+    Uz -> "Mahsulotlarni yuklashda xatolik",
   )
 
-  val ROOM_DELETED: Map[Language, String] = Map(
-    En -> "Room deleted",
-    Ru -> "Комната удалена",
-    Uz -> "Xona o'chirildi",
-  )
-
-  val GROUP_NOT_FOUND: Map[Language, String] = Map(
-    En -> "Group not found",
-    Ru -> "Группа не найдена",
-    Uz -> "Guruh topilmadi",
-  )
-
-  val GROUP_UPDATED: Map[Language, String] = Map(
-    En -> "Group updated",
-    Ru -> "Группа обновлена",
-    Uz -> "Guruh yangilandi",
-  )
-
-  val GROUP_DELETED: Map[Language, String] = Map(
-    En -> "Group deleted",
-    Ru -> "Группа удалена",
-    Uz -> "Guruh o'chirildi",
-  )
-
-  val STUDENT_NOT_FOUND: Map[Language, String] = Map(
-    En -> "Student not found",
-    Ru -> "Студент не найден",
-    Uz -> "O'quvchi topilmadi",
-  )
-
-  val STUDENT_UPDATED: Map[Language, String] = Map(
-    En -> "Student updated",
-    Ru -> "Студент обновлен",
-    Uz -> "O'quvchi yangilandi",
+  val ORDER_SUCCESS: Map[Language, String] = Map(
+    En -> "Order placed successfully!",
+    Ru -> "Заказ успешно оформлен!",
+    Uz -> "Buyurtma muvaffaqiyatli berildi!",
   )
 }
