@@ -19,6 +19,7 @@ case class Services[F[_]](
     auth: Auth[F, AuthedUser],
     assets: AssetsService[F],
     marketBotService: MarketBotService[F],
+    agentBotService: AgentBotService[F],
   )
 
 object Services {
@@ -28,6 +29,7 @@ object Services {
       redis: RedisClient[F],
       s3Client: S3Client[F],
       telegramClientMarket: TelegramClient[F],
+      telegramClientAgent: TelegramClient[F],
       appDomain: NonEmptyString,
     ): Services[F] = {
     def findUser: Phone => F[Option[AccessCredentials[AuthedUser]]] = phone =>
@@ -43,6 +45,16 @@ object Services {
       ),
       marketBotService = MarketBotService.make[F](
         telegramClientMarket,
+        repositories.telegramRepository,
+        repositories.people,
+        repositories.users,
+        repositories.assetsRepository,
+        s3Client,
+        redis,
+        appDomain,
+      ),
+      agentBotService = AgentBotService.make[F](
+        telegramClientAgent,
         repositories.telegramRepository,
         repositories.people,
         repositories.users,

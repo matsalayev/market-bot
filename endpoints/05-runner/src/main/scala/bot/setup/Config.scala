@@ -21,6 +21,7 @@ case class Config(
     adminPhone: Phone,
     jobs: JobsRunnerConfig,
     marketBot: TelegramBotsConfig,
+    agentBot: TelegramBotsConfig,
     appDomain: NonEmptyString,
   ) {
   lazy val migrations: MigrationsConfig = MigrationsConfig(

@@ -32,6 +32,7 @@ case class Environment[F[_]: Async: MonadThrow: Logger](
     s3Client: S3Client[F],
     redis: RedisClient[F],
     telegramClientMarket: TelegramClient[F],
+    telegramClientAgent: TelegramClient[F],
   ) {
   lazy val jobsEnabled: Boolean = config.jobs.enabled
   lazy val toServer: ServerEnvironment[F] =
@@ -41,8 +42,10 @@ case class Environment[F[_]: Async: MonadThrow: Logger](
       config = config.httpServer,
       s3Client = s3Client,
       telegramClientMarket = telegramClientMarket,
+      telegramClientAgent = telegramClientAgent,
       redis = redis,
       telegramMarketBot = config.marketBot,
+      telegramAgentBot = config.agentBot,
     )
   lazy val toJobs: JobsEnvironment[F] =
     JobsEnvironment(
@@ -67,6 +70,9 @@ object Environment {
       telegramBrokerMarket <- HttpClientFs2Backend.resource[F]().map { implicit backend =>
         TelegramClient.make[F](config.marketBot)
       }
+      telegramBrokerAgent <- HttpClientFs2Backend.resource[F]().map { implicit backend =>
+        TelegramClient.make[F](config.agentBot)
+      }
       services = Services
         .make[F](
           config.auth,
@@ -74,6 +80,7 @@ object Environment {
           redis,
           s3Client,
           telegramBrokerMarket,
+          telegramBrokerAgent,
           config.appDomain,
         )
       middleware = Middlewares.make[F](config.auth, redis)
@@ -85,5 +92,6 @@ object Environment {
       s3Client,
       redis,
       telegramBrokerMarket,
+      telegramBrokerAgent,
     )
 }

@@ -24,6 +24,7 @@ object HttpModule {
       .of[Routes[F, AuthedUser]](
         new TelegramBotsRoutes[F](
           env.services.marketBotService,
+          env.services.agentBotService,
           env.telegramMarketBot.webhookSecret,
         ),
         new AuthRoutes[F](env.services.auth),

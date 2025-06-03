@@ -16,12 +16,14 @@ import org.typelevel.log4cats.Logger
 import bot.domain.auth.AuthedUser
 import bot.domain.enums.BotType
 import bot.domain.telegram.Update
+import bot.services.AgentBotService
 import bot.services.MarketBotService
 import bot.support.http4s.utils.Routes
 import bot.syntax.all.circeSyntaxJsonDecoderOps
 
 final case class TelegramBotsRoutes[F[_]: JsonDecoder: Concurrent](
     market: MarketBotService[F],
+    agent: AgentBotService[F],
     webhookSecret: NonEmptyString,
   )(implicit
     logger: Logger[F]
@@ -44,6 +46,7 @@ final case class TelegramBotsRoutes[F[_]: JsonDecoder: Concurrent](
                   .flatMap { update =>
                     BotType.withName(botType) match {
                       case BotType.Market => market.telegramMessage(update)
+                      case BotType.Agent => agent.telegramMessage(update)
                       case _ => logger.info(s"BotType not found: $botType")
                     }
                   }
